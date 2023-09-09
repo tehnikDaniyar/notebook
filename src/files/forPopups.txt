@@ -1,0 +1,11 @@
+	<div class="popup" id="popup">
+		<div class="popup__body">
+			<div class="popup__content">
+				<a href="#header" class="popup__close"></a>
+			</div>
+		</div>
+	</div>
+
+	//============link for popup===============//
+
+	<a class="popup-link" href="#popup">any text</a>

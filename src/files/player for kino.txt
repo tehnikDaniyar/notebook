@@ -1,0 +1,3 @@
+	<div class="kinobox_player" style="width: 700px;"></div>
+	<script src="https://kinobox.tv/kinobox.min.js"></script>
+	<script>new Kinobox('.kinobox_player', { search: { kinopoisk: '32169' } }).init();</script>
