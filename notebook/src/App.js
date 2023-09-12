@@ -4,13 +4,14 @@ import Textarea from './modules/textarea';
 import Button from './modules/button';
 import { nanoid } from 'nanoid';
 import Notes from './modules/notes';
+import Search from './modules/search';
 
 function App() {
 	const [notes, setNotes] = useState([]);
 	const [value, setValue] = useState("");
 	const [mode, setMode] = useState("save");
 	const [idForEdit, setIdForEdit] = useState();
-
+	const [finedNotes, setFinedNotes] = useState([]);
 
 
 	function saveNote(value, mode) {
@@ -49,21 +50,40 @@ function App() {
 		setMode(mode);
 	};
 
+	function search(text) {
 
+		const reg = new RegExp(`${text}`);
 
-	const result = notes.map(note => {
-		return <li key={note.id} onClick={() => { editNote(note.id, note.value) }}>{note.value}</li>
-	})
+		const result = notes.map((note => {
+			if (reg.test(note.value)) {
+				return note;
+			};
+		}));
 
-	console.log(result);
+		setFinedNotes(result);
+	};
+
+	function getList(notes) {
+		const result = notes.map(note => {
+			if (note) {
+				return <li key={note.id} onClick={() => { editNote(note.id, note.value) }}>{note.value}</li>
+			};
+		});
+
+		return result;
+	}
 
 	return (
 		<div className='notebook'>
+			<Search search={search} />
 			<Textarea setValue={setValue} value={value} />
 			<div className="notebook__buttons">
 				<Button status={mode} action={saveNote} value={value} mode={mode} />
 			</div>
-			<Notes notes={result} changeMode={changeMode} />
+			<Notes notes={getList(notes)} changeMode={changeMode} />
+			<div className="resultOfSearch">
+				{getList(finedNotes)}
+			</div>
 		</div>
 	);
 }
